@@ -27,11 +27,6 @@ public class PhotoController {
     private PasswordEncoder passwordEncoder;
     private boolean afterSuccessAdd = false;
 
-    @GetMapping("/password")
-    public String retrivePassword(Model TheModel){
-        System.out.println(passwordEncoder.encode("fun123"));
-        return "test";
-    }
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {

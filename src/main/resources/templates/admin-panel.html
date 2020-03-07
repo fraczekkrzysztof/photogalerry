@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Gallery</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <h3>Hello Admin!!!</h3>
+    <hr>
+    <div>
+        User: <span sec:authentication="name"></span>
+        <br>
+        Role(s): <span sec:authentication="principal.authorities"></span>
+        <br><br>
+    </div>
+
+<!--    <div sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--        <p th:text="${SuccessMessage}"></p>-->
+<!--        <p class="h4 mb-4">New user</p>-->
+
+<!--        <form th:action="@{/photos/newuser}"-->
+<!--              th:object="${newuser}" method="POST">-->
+
+<!--            <input type="text" th:field="*{userName}"-->
+<!--                   class="form-control mb-4 col-4" placeholder="First name">-->
+
+<!--            <input type="password" th:field="*{password}"-->
+<!--                   class="form-control mb-4 col-4" placeholder="Last name">-->
+
+<!--            <button type="submit" class="btn btn-info col-2">Save</button>-->
+
+<!--        </form>-->
+<!--    </div>-->
+
+</div>
+
+<form action="#" th:action="@{/logout}"
+      method="POST">
+
+    <input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
+
+</form>
+
+</body>
+</html>

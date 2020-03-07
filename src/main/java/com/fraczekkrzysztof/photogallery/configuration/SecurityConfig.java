@@ -8,18 +8,26 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     @Qualifier("securityDataSource")
     private DataSource securityDataSource;
+
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
+
+    @Autowired
+    public SecurityConfig(AuthenticationSuccessHandler authenticationSuccessHandler) {
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -31,13 +39,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/photos/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/resources/**").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/")
                 .loginProcessingUrl("/authenticateTheUser")
                 .permitAll()
-                .defaultSuccessUrl("/photos/list")
+                .successHandler(authenticationSuccessHandler)
+//                .defaultSuccessUrl("/photos/list")
                 .and()
                 .logout().permitAll()
                 .and()
