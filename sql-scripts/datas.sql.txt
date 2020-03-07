@@ -1,0 +1,27 @@
+INSERT INTO public.users (id,username,password,enabled)
+VALUES 
+(nextval('hibernate_sequence'),'john','{bcrypt}$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1),
+(nextval('hibernate_sequence'),'mary','{bcrypt}$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1),
+(nextval('hibernate_sequence'),'susan','{bcrypt}$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1);
+
+INSERT INTO "authorities" (id,username,authority,role_list_id)
+select nextval('hibernate_sequence'), username, 'ROLE_USER', id from users where username = 'john';
+INSERT INTO "authorities" (id,username,authority,role_list_id)
+select nextval('hibernate_sequence'), username, 'ROLE_USER', id from users where username = 'mary';
+INSERT INTO "authorities" (id,username,authority,role_list_id)
+select nextval('hibernate_sequence'), username, 'ROLE_USER', id from users where username = 'susan';
+INSERT INTO "authorities" (id,username,authority,role_list_id)
+select nextval('hibernate_sequence'), username, 'ROLE_ADMIN', id from users where username = 'susan';
+
+
+insert into Gallery (id, name, username) values (nextval('hibernate_sequence'), 'Mary''s gallery', 'mary');
+insert into Gallery (id, name, username) values (nextval('hibernate_sequence'),'John''s gallery', 'john');
+							
+insert into photo (id, photo_name, gallery_id)
+select nextval('hibernate_sequence'), 'Photos in marys', id from gallery where name = 'Mary''s gallery';
+insert into photo (id, photo_name, gallery_id)
+select nextval('hibernate_sequence'), 'Photos in marys 2', id from gallery where name = 'Mary''s gallery' ;
+insert into photo (id, photo_name, gallery_id)
+select nextval('hibernate_sequence'), 'Photos in johns', id from gallery where name = 'John''s gallery' ;
+insert into photo (id, photo_name, gallery_id)
+select nextval('hibernate_sequence'), 'Photos in johns', id from gallery where name = 'John''s gallery'; 
